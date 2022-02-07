@@ -1,10 +1,14 @@
 package com.example.parsaniahardik.customdialogrecyclerview;
 
 import android.content.Context;
+
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -45,20 +49,46 @@ public class AdapterRe extends RecyclerView.Adapter<AdapterRe.MyViewHolder> {
     class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView name;
-
-
+        RadioButton radioButton;
+        CardView card_view;
+        private RadioButton lastCheckedRB = null;
         public MyViewHolder(View itemView) {
             super(itemView);
-
             name = (TextView) itemView.findViewById(R.id.name);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
+            radioButton = (RadioButton) itemView.findViewById(R.id.radioButton);
+            card_view=(CardView) itemView.findViewById(R.id.card_view);;
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    MainActivity.textView.setText("You have selected : "+ driverVehicles.get(getAdapterPosition()).getCabNo());
+//                    MainActivity.dialog.dismiss();
+//                }
+//            });
+            radioButton.setEnabled(false);
+            card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    radioButton.setEnabled(true);
+                    radioButton.setChecked(true);
                     MainActivity.textView.setText("You have selected : "+ driverVehicles.get(getAdapterPosition()).getCabNo());
                     MainActivity.dialog.dismiss();
+//                    radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                        @Override
+//                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//                            if (lastCheckedRB != null) {
+//                                lastCheckedRB.setChecked(false);
+//                            }
+//                            //store the clicked radiobutton
+//                            lastCheckedRB = radioButton;
+//
+//                        }
+//                    });
+
                 }
             });
+
 
         }
 

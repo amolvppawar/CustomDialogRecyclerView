@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url("https://mocki.io/v1/e0cabe8d-b68e-4f19-9fe0")
+                .url("https://mocki.io/v1/e0cabe8d-b68e-4f19-9fe0-96cbd28962c7")
                 .method("GET", null)
                 .build();
 
@@ -70,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
 //            Log.d("response", String.valueOf(array));
 
             if(array != null && array.length() > 0) {
-                List<DriverVehicle> items = new Gson().fromJson(array.toString(), new TypeToken<List<DriverVehicle>>() {
+                Gson gson = new GsonBuilder().registerTypeAdapter(Long.class, new LongTypeAdapter()).create();
+                List<DriverVehicle> items = gson.fromJson(array.toString(), new TypeToken<List<DriverVehicle>>() {
                 }.getType());
                 driverVehicles.clear();
                 driverVehicles.addAll(items);
@@ -97,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_recycler);
 
-        Button btndialog = (Button) dialog.findViewById(R.id.btndialog);
+        Button btndialog = (Button) dialog.findViewById(R.id.btnSvD);
         btndialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(MainActivity.this,"Vehicle Selected",Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }
         });

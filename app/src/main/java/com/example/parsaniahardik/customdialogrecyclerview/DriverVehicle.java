@@ -6,7 +6,7 @@ package com.example.parsaniahardik.customdialogrecyclerview;
         import com.google.gson.annotations.SerializedName;
         import java.io.Serializable;
 
-public class DriverVehicle implements Serializable {
+public class DriverVehicle  {
 
     @SerializedName("id")
     @Expose

@@ -7,10 +7,11 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:text="Below is RecyclerView in Custom dialog"/>
+        android:gravity="center"
+        android:text="Select Vehicle"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
@@ -20,10 +21,16 @@
         android:padding="10dp"
         android:layout_marginTop="15dp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btndialog"
-        android:text="Cancel"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSvD"
+            android:text="Start Vehicle Duty"
+            />
+    </LinearLayout>
+
 
 </LinearLayout>
