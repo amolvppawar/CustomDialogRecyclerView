@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             ,"Ferrari","Harly",
             "Lamborghini","Silver"};
     List<DriverVehicle> driverVehicles;
+    List<SelectedVehicle> selectedVehicleList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
         dialogBtn = findViewById(R.id.btn);
         driverVehicles = new ArrayList<>();
+        selectedVehicleList = new ArrayList<>();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url("https://mocki.io/v1/e0cabe8d-b68e-4f19-9fe0-96cbd28962c7")
+                .url("https://mocki.io/v1/5f354745-4f1c-463d-8533-")
                 .method("GET", null)
                 .build();
 
@@ -77,7 +81,19 @@ public class MainActivity extends AppCompatActivity {
                 }.getType());
                 driverVehicles.clear();
                 driverVehicles.addAll(items);
+
+
+
             }
+            if(obj.has("selectedCabs")) {
+                JSONArray array1 = obj.getJSONArray("selectedCabs");
+                Gson gson = new GsonBuilder().registerTypeAdapter(Long.class, new LongTypeAdapter()).create();
+                List<SelectedVehicle> items = gson.fromJson(array1.toString(), new TypeToken<List<SelectedVehicle>>() {
+                }.getType());
+                selectedVehicleList.clear();
+                selectedVehicleList.addAll(items);
+            }
+
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -87,13 +103,15 @@ public class MainActivity extends AppCompatActivity {
         dialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(MainActivity.this,driverVehicles);
+                showDialog(MainActivity.this,driverVehicles,selectedVehicleList);
             }
         });
 
     }
 
-    public void showDialog(Activity activity, List<DriverVehicle> driverVehicles){
+
+
+    public void showDialog(Activity activity, List<DriverVehicle> driverVehicles, List<SelectedVehicle> selectedVehicleList){
 
         dialog = new Dialog(activity);
         // dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -113,6 +131,22 @@ public class MainActivity extends AppCompatActivity {
         AdapterRe adapterRe = new AdapterRe(MainActivity.this,driverVehicles);
         recyclerView.setAdapter(adapterRe);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+
+        for (int k = 0; k < selectedVehicleList.size(); k++) {
+            // JSONObject obj = sourceModelList_array.getJSONObject(k);
+            String cabId = String.valueOf(selectedVehicleList.get(k).getCabId());
+            String cabNo = selectedVehicleList.get(k).getCabNo();
+
+        }
+        String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry",
+                "WebOS","Ubuntu","Windows7","Max OS X"};
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,
+                R.layout.activity_listview, mobileArray);
+
+        ListView listView = (ListView) dialog.findViewById(R.id.mobile_list);
+        listView.setAdapter(adapter);
+
 
         recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override

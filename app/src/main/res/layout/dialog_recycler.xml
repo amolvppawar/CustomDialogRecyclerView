@@ -12,6 +12,13 @@
         android:textSize="25sp"
         android:gravity="center"
         android:text="Select Vehicle"/>
+    <ListView
+        android:id="@+id/mobile_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
